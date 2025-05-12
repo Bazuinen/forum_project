@@ -1,0 +1,15 @@
+<!-- create_topic.html -->
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<h2>Aanmaken van een nieuw onderwerp in {{ category.name }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="post_content">Post content</label>
+    <textarea id="post_content" name="post_content" required></textarea>
+    <button type="submit">Create Topic</button>
+</form>
+
+{% endblock %}

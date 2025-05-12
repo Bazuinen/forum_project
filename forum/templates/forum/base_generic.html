@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Forum{% endblock %}</title>
+
+    <!-- Voeg hier je CSS-bestand toe -->
+    <link rel="stylesheet" href="{% static 'forum/style.css' %}">
+</head>
+<body>
+    <header>
+        <!-- Je header-code hier (bijv. navigatiebalk, logo, etc.) -->
+        <h1>Forum</h1>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'login' %}">Inloggen</a>
+            <a href="{% url 'register' %}">Registreren</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Inhoud van de specifieke pagina komt hier -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Je footer-code hier -->
+        <p>&copy; 2025 Forum. Alle rechten voorbehouden.</p>
+    </footer>
+</body>
+</html>

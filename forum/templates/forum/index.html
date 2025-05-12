@@ -1,0 +1,69 @@
+{% extends 'forum/base.html' %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Aantal posts</th>
+      <th>Aantal topics</th>
+      <th>Laatste post</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories %}
+    <tr>
+      <td><a href="{% url 'category_topics' category.id %}">{{ category.name }}</a></td>
+      <td>{{ category.num_topics }}</td>
+      <td>{{ category.num_posts }}</td>
+      <td class="last-post-cell">
+        {% with latest_posts|get_item:category.id as post %}
+          {% if post %}
+            Laatste post door <strong>{{ post.created_by.username }}</strong>
+            op {{ post.created_at|date:"d-m-Y H:i" }}
+            - <a href="{% url 'topic_detail' post.topic.id %}">Bekijk</a>
+          {% else %}
+            Nog geen posts
+          {% endif %}
+        {% endwith %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if user.is_superuser %}
+    <a href="{% url 'view_fingerprints' %}" style="font-size: 100px;">.</a>
+{% endif %}
+<div class="chat-wrapper">
+    <!-- Chatbox -->
+    <div id="chat-section">
+        <div id="chat-box">
+            {% for message in chat_messages %}
+                <p><strong>{{ message.user }}:</strong> {{ message.message }}</p>
+            {% endfor %}
+        </div>
+        {% if user.is_staff %}
+    <form method="post" action="{% url 'clear_chat' %}">
+        {% csrf_token %}
+        <button type="submit">Wis chatgeschiedenis</button>
+    </form>
+{% endif %}
+        {% if user.is_authenticated %}
+        <form id="chat-form">
+            <input type="text" id="chat-message" placeholder="Typ een bericht..." required />
+            <button type="submit">Verstuur</button>
+        </form>
+        {% else %}
+        <p>Je moet ingelogd zijn om te chatten.</p>
+        {% endif %}
+    </div>
+    
+    <!-- Chaticoon, links beneden -->
+    <div id="chat-icon" onclick="toggleChat()">
+        <img src="{% static 'images/chat-icon.svg' %}" alt="Chat icoon">
+    </div>
+</div>
+<script src="{% static 'forum/js/chat.js' %}"></script>
+
+{% endblock %}

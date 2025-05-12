@@ -1,0 +1,42 @@
+{% extends 'forum/base.html' %}
+{% block content %}
+  <h2>Bezoekerslogs</h2>
+
+  {% if fingerprints %}
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Gebruiker</th>
+          <th>IP-adres</th>
+          <th>Browser</th>
+          <th>Resolutie</th>
+          <th>Taal</th>
+          <th>Tijdzone</th>
+          <th>Tijdstip</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fp in fingerprints %}
+<tr>
+  <td>
+    {% if fp.user %}
+      {{ fp.user.username }}
+    {% else %}
+      Gast
+    {% endif %}
+  </td>
+  <td>{{ fp.ip_address }}</td>
+  <td>{{ fp.user_agent }}</td>
+  <td>{{ fp.screen_resolution }}</td>
+  <td>{{ fp.language }}</td>
+  <td>{{ fp.timezone }}</td>
+  <td>{{ fp.timestamp }}</td>
+</tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Er zijn geen logs op dit moment.</p>
+  {% endif %}
+{% endblock %}

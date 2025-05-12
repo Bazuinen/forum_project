@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Forum{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'forum/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'forum/css/chat.css' %}">
+    <link rel="stylesheet" href="{% static 'forum/css/search.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+
+
+</head>
+<body>
+    
+<header class="header">
+    <div class="header-container">
+        <div class="forum-logo">
+            <a href="{% url 'index' %}">Bazuinen</a>
+        </div>
+
+        <div class="header-search">
+            <form action="{% url 'search' %}" method="get" class="search-form">
+                <input type="text" name="q" placeholder="Zoeken..." value="{{ request.GET.q }}">
+                <button type="submit" class="search-button">🔍</button>
+            </form>
+        </div>
+
+        <div class="header-right">
+            {% if user.is_authenticated %}
+                <span>Welkom, {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Log uit</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="auth-btn">Log in</a>
+                <a href="{% url 'register' %}" class="auth-btn">Registreer</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+   <script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const fingerprintData = {
+        screen_width: screen.width,
+        screen_height: screen.height,
+        language: navigator.language,
+        user_agent: navigator.userAgent,
+        platform: navigator.platform,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    };
+
+    fetch('/collect_fingerprint/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(fingerprintData)
+    });
+</script>
+
+
+
+</body>
+
+</html>

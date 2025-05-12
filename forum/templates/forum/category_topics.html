@@ -1,0 +1,31 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+  <div class="topic-page">
+    <h3>{{ category.name }}</h3>
+
+    <table>
+      <thead>
+        <a href="{% url 'create_topic' category.id %}" class="btn btn-primary">Nieuw topic aanmaken</a>
+
+        <tr>
+          <th>Onderwerp</th>
+          <th>Aantal Posts</th>
+          <th>Aantal Bekeken</th>
+          <th>Laatste Post</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for topic in topics %}
+        <tr>
+          <td><a href="{% url 'topic_detail' topic.id %}">{{ topic.title }}</a></td>
+          <td>{{ topic.num_posts }}</td>
+          <td>{{ topic.views }}</td>
+          <td>{{ topic.latest_post_by }}</td>
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

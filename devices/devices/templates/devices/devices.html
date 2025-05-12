@@ -1,0 +1,20 @@
+<h2>Jouw toestellen</h2>
+
+{% if has_devices %}
+    <table>
+        <tr>
+            <th>IP-adres</th>
+            <th>User Agent</th>
+            <th>Datum</th>
+        </tr>
+        {% for device in devices %}
+        <tr>
+            <td>{{ device.ip_address }}</td>
+            <td>{{ device.user_agent }}</td>
+            <td>{{ device.login_time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Geen geregistreerde apparaten gevonden.</p>
+{% endif %}

@@ -1,0 +1,32 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="topic-container">
+  <h2>{{ topic.title }}</h2>
+  <p><strong>Views:</strong> {{ topic.views }}</p>
+
+  <div class="posts-section">
+    {% for post in posts %}
+      <div class="post">
+        <p>{{ post.content|linebreaks }}</p>
+        <small>Geplaatst door <strong>{{ post.created_by.username }}</strong> op {{ post.created_at|date:"d-m-Y H:i" }}</small>
+      </div>
+    {% empty %}
+      <p>Er zijn nog geen reacties op dit onderwerp.</p>
+    {% endfor %}
+  </div>
+
+  {% if user.is_authenticated %}
+    <div class="post-form">
+      <h3>Voeg een reactie toe</h3>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Plaatsen</button>
+      </form>
+    </div>
+  {% else %}
+    <p><a href="{% url 'login' %}">Log in</a> om een reactie te plaatsen.</p>
+  {% endif %}
+</div>
+{% endblock %}

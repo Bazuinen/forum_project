@@ -1,0 +1,48 @@
+{% extends 'forum/base.html' %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<h2>Categorieën</h2>
+
+<!-- Tabel voor categorieën -->
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Aantal posts</th>
+      <th>Aantal topics</th>
+      <th>Laatste post</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories %}
+    <tr>
+      <td><a href="{% url 'category_topics' category.id %}">{{ category.name }}</a></td>
+      <td>{{ category.num_topics }}</td>
+      <td>{{ category.num_posts }}</td>
+      <td class="last-post-cell">
+        {% with latest_posts|get_item:category.id as post %}
+          {% if post %}
+            Laatste post door <strong>{{ post.created_by.username }}</strong>
+            op {{ post.created_at|date:"d-m-Y H:i" }}
+            - <a href="{% url 'topic_detail' post.topic.id %}">Bekijk</a>
+          {% else %}
+            Nog geen posts
+          {% endif %}
+        {% endwith %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div id="chat-box" class="chat-box">
+    <!-- Berichten verschijnen hier -->
+</div>
+
+<form id="chat-form">
+    {% csrf_token %}
+    <input type="text" id="chat-input" placeholder="Typ je bericht...">
+    <button type="submit">Verstuur</button>
+</form>
+
+{% endblock %}
