@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-r#hcqojzu4z1%rg_)0ms(&$$-jms(qabbxazyg4g4c^@4xwcx1
 DEBUG = True
 
 ALLOWED_HOSTS = ['136.144.185.18', 'bazuinen.be', 'www.bazuinen.be']
-CSRF_TRUSTED_ORIGINS = ['136.144.185.18', 'bazuinen.be', 'www.bazuinen.be']
+CSRF_TRUSTED_ORIGINS = [
+    'https://136.144.185.18',
+    'https://bazuinen.be',
+    'https://www.bazuinen.be',
+]
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
