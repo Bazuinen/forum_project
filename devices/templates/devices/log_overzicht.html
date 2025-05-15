@@ -1,0 +1,35 @@
+{% extends 'forum/base.html' %}
+
+{% block title %}Bezoeklogs overzicht{% endblock %}
+
+{% block content %}
+<h1>Bezoeklogs overzicht</h1>
+
+{% if logs %}
+<table>
+    <thead>
+        <tr>
+            <th>Gebruiker</th>
+            <th>IP-adres</th>
+            <th>Pad</th>
+            <th>Tijdstip</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.user.username|default:"Gast" }}</td>
+            <td>{{ log.ip_address }}</td>
+            <td>{{ log.path }}</td>
+            <td>{{ log.timestamp|date:"d-m-Y H:i:s" }}</td>
+            <td><a href="{% url 'fingerprint_log_detail' key=log.id %}">Bekijk</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<p>Er zijn nog geen bezoeklogs beschikbaar.</p>
+{% endif %}
+{% endblock %}

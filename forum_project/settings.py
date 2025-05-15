@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-r#hcqojzu4z1%rg_)0ms(&$$-jms(qabbxazyg4g4c^@4xwcx1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['136.144.185.18', 'bazuinen.be', 'www.bazuinen.be']
+CSRF_TRUSTED_ORIGINS = ['136.144.185.18', 'bazuinen.be', 'www.bazuinen.be']
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 
 # Application definition
@@ -59,9 +64,7 @@ ROOT_URLCONF = 'forum_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR / 'forum' / 'templates',  # Volledige pad naar de templates map
-        ],
+        'DIRS': [BASE_DIR / 'forum' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,4 +1,4 @@
-from .models import VisitorFingerprint
+from devices.models import VisitorFingerprint
 
 class FingerprintMiddleware:
     def __init__(self, get_response):

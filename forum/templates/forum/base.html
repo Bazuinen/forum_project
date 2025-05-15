@@ -1,50 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}Forum{% endblock %}</title>
+    <title>{% block title %}Bazuinen{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'forum/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'forum/css/chat.css' %}">
     <link rel="stylesheet" href="{% static 'forum/css/search.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'forum/favicon.ico' %}">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
 
 
 </head>
 <body>
-    
-<header class="header">
-    <div class="header-container">
-        <div class="forum-logo">
-            <a href="{% url 'index' %}">Bazuinen</a>
-        </div>
-
-        <div class="header-search">
-            <form action="{% url 'search' %}" method="get" class="search-form">
-                <input type="text" name="q" placeholder="Zoeken..." value="{{ request.GET.q }}">
-                <button type="submit" class="search-button">🔍</button>
-            </form>
-        </div>
-
-        <div class="header-right">
-            {% if user.is_authenticated %}
-                <span>Welkom, {{ user.username }}</span>
-                <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="logout-button">Log uit</button>
+    <header class="header">
+        <div class="header-container">
+            <div class="forum-logo">
+                <a href="{% url 'index' %}">Bazuinen</a>
+            </div>
+            <div class="header-search">
+                <form action="{% url 'search' %}" method="get" class="search-form">
+                    <input type="text" name="q" placeholder="Zoeken..." value="{{ request.GET.q }}">
+                    <button type="submit" class="search-button">🔍</button>
                 </form>
-            {% else %}
-                <a href="{% url 'login' %}" class="auth-btn">Log in</a>
-                <a href="{% url 'register' %}" class="auth-btn">Registreer</a>
-            {% endif %}
+            </div>
+            <div class="header-right">
+                {% if user.is_authenticated %}
+                    <span>Welkom, {{ user.username }}</span>
+                    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button">Log uit</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="auth-btn">Log in</a>
+                    <a href="{% url 'register' %}" class="auth-btn">Registreer</a>
+                {% endif %}
+            </div>
         </div>
-    </div>
-</header>
-
-
+    </header>
 
     <main>
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
     </main>
    <script>
     function getCookie(name) {

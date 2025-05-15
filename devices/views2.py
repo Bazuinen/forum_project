@@ -4,7 +4,6 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import LoginDevice, VisitorFingerprint
-from django.core.exceptions import PermissionDenied
 
 @login_required
 def my_devices(request):
@@ -13,20 +12,15 @@ def my_devices(request):
 
 @login_required
 def fingerprint_log_overzicht(request):
-    if not request.user.is_superuser:
-        raise PermissionDenied("Alleen de superuser mag deze pagina bekijken.")
-    
     logs = VisitorFingerprint.objects.all().order_by('-timestamp')
     return render(request, 'devices/log_overzicht.html', {'logs': logs})
 
-
 @login_required
 def fingerprint_log_detail(request, key):
-    if not request.user.is_superuser:
-        raise PermissionDenied("Alleen de superuser mag deze pagina bekijken.")
-    
     log = get_object_or_404(VisitorFingerprint, id=key)
+
     return render(request, 'devices/log_detail.html', {'log': log})
+
 @csrf_exempt
 def collect_fingerprint(request):
     if request.method != 'POST':

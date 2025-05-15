@@ -1,0 +1,19 @@
+{% extends 'forum/base.html' %}
+
+{% block title %}Bezoeklog details{% endblock %}
+
+{% block content %}
+<h1>Details van bezoeklog</h1>
+
+<p><strong>IP-adres:</strong> {{ log.ip_address }}</p>
+<p><strong>Pad bezocht:</strong> {{ log.path }}</p>
+<p><strong>Tijdstip:</strong> {{ log.timestamp|date:"d-m-Y H:i:s" }}</p>
+
+<p><strong>User Agent:</strong> {{ log.user_agent }}</p>
+<p><strong>Resolutie:</strong> {{ log.screen_width }} x {{ log.screen_height }}</p>
+<p><strong>Taal:</strong> {{ log.language }}</p>
+<p><strong>Platform:</strong> {{ log.platform }}</p>
+<p><strong>Tijdzone:</strong> {{ log.timezone }}</p>
+
+<a href="{% url 'fingerprint_log_overzicht' %}">← Terug naar overzicht</a>
+{% endblock %}
