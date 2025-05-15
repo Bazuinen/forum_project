@@ -6,7 +6,7 @@ class FingerprintMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        if not request.user.is_superuser:  # Superusers worden niet gelogd
+        if not request.user.is_superuser:
             ip = request.META.get('REMOTE_ADDR')
             ua = request.META.get('HTTP_USER_AGENT', '')
             path = request.path
